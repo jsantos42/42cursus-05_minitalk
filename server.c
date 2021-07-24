@@ -1,38 +1,33 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <signal.h>
-
-void	handler(int sig_num);
+#include "common.h"
 
 void choose_function(void(*func_name)(int), int number);
 void print_hello(int num);
 void print_goodbye(int num);
+void	save_to_array(int *bin, int iter, int num);
 
 int main()
 {
 	int iter;
 	int signal;
+	static int	bin[8];
+
+	signal(SIGUSR1, save_to_array(bin, iter, 0));
+	signal(SIGUSR2, save_to_array(bin, iter, 1));
+	while (1)
+	{
+		printf("%d", getpid());
+		sleep(1);
+	}
+
+
+
+
 
 	choose_function(print_hello, 29);
 	choose_function(print_goodbye, 29);
 //	signal(SIGUSR1, &handler);
-
-
-//	printf("Hello process number %d\n", getpid());
-
-//	while (1)
-//	{
-//		//if gets string, print it
-//		sleep(1);
-//	}
     return 0;
 }
-
-void	handler(int sig_num)
-{
-
-}
-
 
 void print_hello(int num)
 {
@@ -47,4 +42,24 @@ void print_goodbye(int num)
 void choose_function(void(*func_name)(int), int number)
 {
 	func_name(number);
+}
+
+void	save_to_array(int *bin, int iter, int num)
+{
+	if (iter < 8)
+	{
+		bin[iter] = num;
+		iter++;
+	}
+	else
+	{
+		//convert to decimal and printchar
+		iter = 0;
+	}
+}
+
+
+
+
+
 }
