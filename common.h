@@ -12,5 +12,7 @@
 
 void	binary_conv(int *bin, int letter);
 void	send_binary(int *bin, int pid);
+void	save_to_array(int signal);
+int	decimal_conv(int *bin);
 
 #endif //MINITALK_COMMON_H

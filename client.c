@@ -17,27 +17,28 @@ int main(int argc, char **argv)
 	{
 		binary_conv(bin, *str);
 		send_binary(bin, pid);
-		//pass to server
 		str++;
 	}
-    return 0;
+	binary_conv(bin, *str);
+	send_binary(bin, pid);
+	return 0;
 }
 
 void	binary_conv(int *bin, int letter)
 {
+	int base_2;
 	int	iter;
-	int exp;
 
+	base_2 = 128;
 	iter = 0;
-	exp = 128;
 	while (iter < 8)
 	{
-		if (letter / exp)
+		if (letter / base_2)
 			bin[iter] = 1;
 		else
 			bin[iter] = 0;
-		letter %= exp;
-		exp /= 2;
+		letter %= base_2;
+		base_2 /= 2;
 		iter++;
 	}
 }

@@ -1,65 +1,66 @@
 #include "common.h"
 
-void choose_function(void(*func_name)(int), int number);
-void print_hello(int num);
-void print_goodbye(int num);
-void	save_to_array(int *bin, int iter, int num);
-
 int main()
 {
-	int iter;
-	int signal;
-	static int	bin[8];
-
-	signal(SIGUSR1, save_to_array(bin, iter, 0));
-	signal(SIGUSR2, save_to_array(bin, iter, 1));
+	signal(SIGUSR1, save_to_array);
+	signal(SIGUSR2, save_to_array);
 	while (1)
 	{
-		printf("%d", getpid());
-		sleep(1);
+		printf("%d\n", getpid());
+//		raise(SIGUSR1);
+//		raise(SIGUSR2);
+//		raise(SIGUSR1);
+//		raise(SIGUSR1);
+//		raise(SIGUSR1);
+//		raise(SIGUSR1);
+//		raise(SIGUSR1);
+//		raise(SIGUSR1);
+		pause();
 	}
-
-
-
-
-
-	choose_function(print_hello, 29);
-	choose_function(print_goodbye, 29);
-//	signal(SIGUSR1, &handler);
     return 0;
 }
 
-void print_hello(int num)
+void	save_to_array(int signal)
 {
-	printf("hello, I'm number %d\n", num);
-}
+	static int	iter;
+	static int	bin[8];
+	int 		converted_signal;
+	int			decimal;
 
-void print_goodbye(int num)
-{
-	printf("goodbye, I'm number %d\n", num);
-}
-
-void choose_function(void(*func_name)(int), int number)
-{
-	func_name(number);
-}
-
-void	save_to_array(int *bin, int iter, int num)
-{
+	printf("got a signal %d\n", signal);
+	if (signal == SIGUSR1)
+		converted_signal = 0;
+	else if (signal == SIGUSR2)
+		converted_signal = 1;
 	if (iter < 8)
 	{
-		bin[iter] = num;
+		bin[iter] = converted_signal;
 		iter++;
 	}
-	else
+	if (iter == 8)
 	{
-		//convert to decimal and printchar
+		decimal = decimal_conv(bin);
+		printf("%c", decimal);
+//		write(1, &decimal, 1);
 		iter = 0;
 	}
 }
 
+int	decimal_conv(int *bin)
+{
+	int	decimal;
+	int base_2;
+	int iter;
 
-
-
-
+	decimal = 0;
+	base_2 = 128;
+	iter = 0;
+	while (iter < 8)
+	{
+		if (bin[iter] == 1)
+			decimal += base_2;
+		base_2 /= 2;
+		iter++;
+	}
+	return (decimal);
 }
