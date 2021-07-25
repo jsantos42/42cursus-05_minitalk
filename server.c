@@ -13,25 +13,24 @@ int main()
 
 void	save_to_array(int signal)
 {
-	static int	iter;
-	static int	bin[8];
-	int 		converted_signal;
-	int			decimal;
+	static t_static	array;
+	int				converted_signal;
+	int				decimal;
 
 	if (signal == SIGUSR1)
 		converted_signal = 0;
 	else if (signal == SIGUSR2)
 		converted_signal = 1;
-	if (iter < 8)
+	if (array.iter < 8)
 	{
-		bin[iter] = converted_signal;
-		iter++;
+		array.bin[array.iter] = converted_signal;
+		array.iter++;
 	}
-	if (iter == 8)
+	if (array.iter == 8)
 	{
-		decimal = decimal_conv(bin);
+		decimal = decimal_conv(array.bin);
 		write(1, &decimal, 1);
-		iter = 0;
+		array.iter = 0;
 	}
 }
 

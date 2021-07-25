@@ -1,4 +1,6 @@
 #include "common.h"
+//#include <time.h>
+//#include <stdio.h>
 
 int main(int argc, char **argv)
 {
@@ -7,6 +9,7 @@ int main(int argc, char **argv)
 	size_t	size;
 	int		bin[8];
 
+//	clock_t begin = clock();
 	if (argc != 3)
 		return (1);
 	pid = ft_atoi(argv[1]);
@@ -20,6 +23,9 @@ int main(int argc, char **argv)
 	}
 	convert_to_binary_and_send(bin, '\0', pid);
 	convert_to_binary_and_send(bin, '\n', pid);
+//	clock_t end = clock();
+//	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+//	printf("%f", time_spent);
 	return (0);
 }
 
