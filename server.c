@@ -4,19 +4,9 @@ int main()
 {
 	signal(SIGUSR1, save_to_array);
 	signal(SIGUSR2, save_to_array);
+	printf("%d\n", getpid());
 	while (1)
-	{
-		printf("%d\n", getpid());
-//		raise(SIGUSR1);
-//		raise(SIGUSR2);
-//		raise(SIGUSR1);
-//		raise(SIGUSR1);
-//		raise(SIGUSR1);
-//		raise(SIGUSR1);
-//		raise(SIGUSR1);
-//		raise(SIGUSR1);
-		pause();
-	}
+		sleep(10);
     return 0;
 }
 
@@ -27,7 +17,6 @@ void	save_to_array(int signal)
 	int 		converted_signal;
 	int			decimal;
 
-	printf("got a signal %d\n", signal);
 	if (signal == SIGUSR1)
 		converted_signal = 0;
 	else if (signal == SIGUSR2)
@@ -40,8 +29,7 @@ void	save_to_array(int signal)
 	if (iter == 8)
 	{
 		decimal = decimal_conv(bin);
-		printf("%c", decimal);
-//		write(1, &decimal, 1);
+		write(1, &decimal, 1);
 		iter = 0;
 	}
 }
