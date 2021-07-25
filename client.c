@@ -15,16 +15,15 @@ int main(int argc, char **argv)
 	ft_strlcpy(str, argv[2], size + 1);
 	while (*str)
 	{
-		binary_conv(bin, *str);
-		send_binary(bin, pid);
+		convert_to_binary_and_send(bin, *str, pid);
 		str++;
 	}
-	binary_conv(bin, *str);
-	send_binary(bin, pid);
+	convert_to_binary_and_send(bin, '\0', pid);
+	convert_to_binary_and_send(bin, '\n', pid);
 	return (0);
 }
 
-void	binary_conv(int *bin, int letter)
+void	convert_to_binary_and_send(int *bin, int letter, int pid)
 {
 	int base_2;
 	int	iter;
@@ -41,6 +40,7 @@ void	binary_conv(int *bin, int letter)
 		base_2 /= 2;
 		iter++;
 	}
+	send_binary(bin, pid);
 }
 
 void	send_binary(int *bin, int pid)

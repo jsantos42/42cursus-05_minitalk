@@ -4,10 +4,11 @@ int main()
 {
 	signal(SIGUSR1, save_to_array);
 	signal(SIGUSR2, save_to_array);
-	printf("%d\n", getpid());
+	ft_putnbr_fd(getpid(), 1);
+	ft_putchar_fd('\n', 1);
 	while (1)
 		sleep(10);
-    return 0;
+    return (0);
 }
 
 void	save_to_array(int signal)
