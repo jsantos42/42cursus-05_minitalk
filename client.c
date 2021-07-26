@@ -26,7 +26,12 @@ int main(int argc, char **argv)
 //	clock_t end = clock();
 //	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 //	printf("%f\n", time_spent);
-	return (0);
+
+	sleep(5);
+
+///wait for feedback
+///error_handler
+//	return (0);
 }
 
 void	convert_to_binary_and_send(int *bin, int letter, int pid)

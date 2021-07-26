@@ -4,14 +4,13 @@ int main()
 {
 	struct sigaction	sa;
 
-//	sa.sa_sigaction = save_to_array;
-	sa.sa_handler = save_to_array;
+	sa.sa_sigaction = save_to_array;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigaction(SIGUSR2, &sa, NULL);
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
-//	sa.sa_flags = SA_SIGINFO;
+//	sa.sa_flags = SA_SIGINFO; ////not sure if needed
 //	signal(SIGUSR1, save_to_array);
 //	signal(SIGUSR2, save_to_array);
 	ft_putstr_fd("Server is now running. PID: ", 1);
@@ -22,12 +21,13 @@ int main()
     return (0);
 }
 
-void	save_to_array(int signal)
+void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 {
 	static t_static	array;
 	int				converted_signal;
 	int				decimal;
 
+	(void)ucontext;
 	if (signal == SIGUSR1)
 		converted_signal = 0;
 	else if (signal == SIGUSR2)
@@ -41,6 +41,8 @@ void	save_to_array(int signal)
 	{
 		decimal = decimal_conv(array.bin);
 		write(1, &decimal, 1);
+		if (decimal == '\n')
+			kill(info->si_pid, SIGUSR1);
 		array.iter = 0;
 	}
 }

@@ -12,7 +12,7 @@ typedef struct s_static {
 
 void	convert_to_binary_and_send(int *bin, int letter, int pid);
 void	send_binary(int *bin, int pid);
-void	save_to_array(int signal);
+void	save_to_array(int signal, siginfo_t *info, void *ucontext);
 int		decimal_conv(int *bin);
 
 #endif
