@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	convert_to_binary_and_send(bin, '\n', pid);
 //	clock_t end = clock();
 //	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//	printf("%f", time_spent);
+//	printf("%f\n", time_spent);
 	return (0);
 }
 

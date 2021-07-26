@@ -2,8 +2,19 @@
 
 int main()
 {
-	signal(SIGUSR1, save_to_array);
-	signal(SIGUSR2, save_to_array);
+	struct sigaction	sa;
+
+//	sa.sa_sigaction = save_to_array;
+	sa.sa_handler = save_to_array;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+	sigaddset(&sa.sa_mask, SIGUSR2);
+//	sa.sa_flags = SA_SIGINFO;
+//	signal(SIGUSR1, save_to_array);
+//	signal(SIGUSR2, save_to_array);
+	ft_putstr_fd("Server is now running. PID: ", 1);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putchar_fd('\n', 1);
 	while (1)
