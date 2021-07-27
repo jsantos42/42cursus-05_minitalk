@@ -1,5 +1,12 @@
 #include "common.h"
 
+/*
+**	Starts by changing the default answer to the SIGUSR1 and SIGUSR2 signals,
+**	which will be used as code to pass bits (0 and 1, respectively).
+**	It runs an infinite loop, during which it can receive signals from the
+**	client program, which will allow it to print the transmitted string.
+*/
+
 int main(void)
 {
 	struct sigaction	sa;
@@ -19,11 +26,21 @@ int main(void)
     return (0);
 }
 
+/*
+**	Starts by doing typecasting to ucontext since it will not be needed;
+**	It will use the signals received to rebuild the chars from the string given
+**	to client. Everytime array.iter gets to 8, it prints the char and resets the
+**	array.
+**	When it gets a null char, it understands it's the end of the string, prints
+**	a nl char and sends a signal back to client to acknowledge the reception of
+**	the string.
+*/
+
 void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 {
 	static t_static	array;
-	int				converted_signal;
-	int				decimal;
+	u_int8_t 		converted_signal;
+	u_int8_t		decimal;
 
 	(void)ucontext;
 	if (signal == SIGUSR1)
@@ -38,7 +55,7 @@ void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 	if (array.iter == 8)
 	{
 		decimal = decimal_conv(array.bin);
-		write(1, &decimal, 1); //if it prints every 8, how come it prints a unicode thats 16, does it know it will get for another 8?
+		write(1, &decimal, 1);
 		if (decimal == '\0')
 		{
 			write(1, "\n", 1);
@@ -50,9 +67,9 @@ void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 
 int	decimal_conv(int *bin)
 {
-	int	decimal;
-	int base_2;
-	int iter;
+	u_int8_t	decimal;
+	u_int8_t	base_2;
+	u_int8_t	iter;
 
 	decimal = 0;
 	base_2 = 128;

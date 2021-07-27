@@ -20,5 +20,5 @@ void	print_confirmation(int signal, siginfo_t *info, void *ucontext)
 	(void)info;
 	(void)ucontext;
 	ft_putstr_fd("Server just confirmed reception of the string. Exiting now.", 1);
-	exit(1);
+	exit(0);
 }

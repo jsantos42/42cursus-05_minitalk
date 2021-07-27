@@ -1,7 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#include <unistd.h>
+//#include <unistd.h>
 #include <signal.h>
 #include "libft/libft.h"
 
