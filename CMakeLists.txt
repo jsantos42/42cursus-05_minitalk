@@ -52,7 +52,7 @@ add_executable(client
         libft/ft_toupper.c
         libft/libft.h
         client.c
-        common.h)
+        common.h errors_and_confirmation.c)
 
 add_executable(server
         libft/ft_atoi.c
