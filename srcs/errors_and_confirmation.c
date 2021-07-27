@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../include/common.h"
 
 int	error_handler(int error)
 {

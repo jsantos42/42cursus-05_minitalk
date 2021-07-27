@@ -1,4 +1,4 @@
-#include "common.h"
+#include "../include/common.h"
 
 /*
 **	Starts by changing the default answer to the SIGUSR1 signal, printing a
