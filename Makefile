@@ -24,7 +24,7 @@ all:		$(NAME_SERVER) $(NAME_CLIENT)
 bonus:		all
 
 libft:
-				$(MAKE) -C $(LIBFT)
+				$(MAKE) -C $(LIBS)
 
 $(NAME_SERVER):		libft $(OBJS_SERVER)
 					$(CC) $(CFLAGS) -o $(NAME_SERVER) $(LIBS)/libft.a $(OBJS_SERVER)
@@ -41,7 +41,7 @@ clean:
 
 fclean:		clean
 				make fclean -C $(LIBS)
-				#$(RM) $(NAME) checker
+				$(RM) $(NAME_CLIENT) $(NAME_SERVER)
 
 re:			fclean	all
 

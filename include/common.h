@@ -2,7 +2,7 @@
 # define COMMON_H
 
 # include <signal.h>
-# include "libft/libft.h"
+# include "../libs/libft/libft.h"
 
 # define INVALID_INPUT -1
 # define TRANSMISSION_ERROR -2

@@ -6,7 +6,7 @@ int	error_handler(int error)
 	if (error == INVALID_INPUT)
 	{
 		ft_putstr_fd("Invalid input.\n", 1);
-		ft_putstr_fd("Please try: ./client <PID> <string to send>.\n", 1);
+		ft_putstr_fd("Please try: ./client <PID> <string to send>\n", 1);
 	}
 	else if (error == TRANSMISSION_ERROR)
 	{
