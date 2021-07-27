@@ -32,7 +32,12 @@ int main(int argc, char **argv)
 //	return (0);
 }
 
-void	convert_to_binary_and_send(int *bin, int letter, int pid)
+/*
+ * for some reason, changing the type of letter from int to unsigned char allows
+ * the transfer of unicode chars!!!!
+ */
+
+void	convert_to_binary_and_send(int *bin, unsigned char letter, int pid)
 {
 	int base_2;
 	int	iter;
