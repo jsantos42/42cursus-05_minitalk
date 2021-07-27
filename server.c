@@ -1,6 +1,6 @@
 #include "common.h"
 
-int main()
+int main(void)
 {
 	struct sigaction	sa;
 

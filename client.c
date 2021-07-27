@@ -6,14 +6,18 @@ int main(int argc, char **argv)
 {
 	int		pid;
 	char	*str;
-	size_t	size;
 	int		bin[8];
+	struct sigaction	sa;
 
+	sa.sa_sigaction = print_confirmation;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigemptyset(&sa.sa_mask);
+	sigaddset(&sa.sa_mask, SIGUSR1);
+//	sa.sa_flags = SA_SIGINFO; ////not sure if needed
 //	clock_t begin = clock();
 	if (argc != 3)
 		error_handler(INVALID_INPUT);
 	pid = ft_atoi(argv[1]);
-	size = ft_strlen(argv[2]);
 	str = argv[2];
 	while (*str)
 	{
@@ -78,5 +82,13 @@ int	error_handler(int error)
 {
 	if (error == INVALID_INPUT)
 		ft_putstr_fd("Invalid input\n", 1);
+	exit(1);
+}
+
+void	print_confirmation(int signal, siginfo_t *info, void *ucontext)
+{
+	(void)info;
+	(void)ucontext;
+	ft_putstr_fd("Server just confirmed reception of the string. Exiting now.", 1);
 	exit(1);
 }

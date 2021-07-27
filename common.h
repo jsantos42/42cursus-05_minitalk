@@ -17,5 +17,6 @@ void	send_binary(int *bin, int pid);
 void	save_to_array(int signal, siginfo_t *info, void *ucontext);
 int		decimal_conv(int *bin);
 int	error_handler(int error);
+void	print_confirmation(int signal, siginfo_t *info, void *ucontext);
 
 #endif
