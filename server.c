@@ -15,7 +15,7 @@ int main(void)
 	ft_putnbr_fd(getpid(), 1);
 	ft_putchar_fd('\n', 1);
 	while (1)
-		sleep(10);
+		pause();
     return (0);
 }
 

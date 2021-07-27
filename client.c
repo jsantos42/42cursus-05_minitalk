@@ -30,6 +30,7 @@ int main(int argc, char **argv)
 //	printf("%f\n", time_spent);
 
 	sleep(5); ///wait for feedback
+	error_handler(NO_FEEDBACK);
 ///error_handler
 //	return (0);
 }
@@ -58,30 +59,42 @@ void	convert_to_binary_and_send(int *bin, unsigned char letter, int pid)
 		base_2 /= 2;
 		iter++;
 	}
-	send_binary(bin, pid);
+	if (send_binary(bin, pid) == -1)
+		error_handler(TRANSMISSION_ERROR);
 }
 
-void	send_binary(int *bin, int pid)
+int	send_binary(int *bin, int pid)
 {
+	int ret;
 	int	iter;
 
+	ret = 0;
 	iter = 0;
 	while (iter < 8)
 	{
 		if (bin[iter] == 0)
-			kill(pid, SIGUSR1);
+			ret = kill(pid, SIGUSR1);
 		else
-			kill(pid, SIGUSR2);
+			ret = kill(pid, SIGUSR2);
 		usleep(100);
 		iter++;
 	}
+	return (ret);
 }
 
 
 int	error_handler(int error)
 {
+	ft_putstr_fd("ERROR: ", 1);
 	if (error == INVALID_INPUT)
 		ft_putstr_fd("Invalid input\n", 1);
+	else if (error == TRANSMISSION_ERROR)
+		ft_putstr_fd("Not able to send the string. Please check that: \n1) the"
+			   " server is running and \n2) the PID given is the correct one.\n",
+			   1);
+	else if (error == NO_FEEDBACK)
+		ft_putstr_fd("Not getting any confirmation message from the server, "
+			   "the message might have been lost in transit. Exiting now.\n", 1);
 	exit(1);
 }
 
