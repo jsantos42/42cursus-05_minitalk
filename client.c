@@ -1,6 +1,4 @@
 #include "common.h"
-//#include <time.h>
-//#include <stdio.h>
 
 /*
 **	Starts by changing the default answer to the SIGUSR1 signal, printing a
@@ -14,21 +12,24 @@
 **	Finally it sends a null char to warn of the end of the string and waits for
 **	a confirmation message from the server. If it doesn't arrive in 5 seconds,
 **	it exits with an error.
+**
+**	NOTE: I'm not entirely sure SA_SIGINFO really needs to be defined, since the
+**	compiler raises no issue without it and it runs smoothly. Still, according
+**	to the documentation of sigaction, it should be defined.
 */
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	int		pid;
-	char	*str;
-	int		bin[8];
+	int					pid;
+	char				*str;
+	int					bin[8];
 	struct sigaction	sa;
 
 	sa.sa_sigaction = print_confirmation;
 	sigaction(SIGUSR1, &sa, NULL);
 	sigemptyset(&sa.sa_mask);
 	sigaddset(&sa.sa_mask, SIGUSR1);
-//	sa.sa_flags = SA_SIGINFO; ////not sure if needed
-//	clock_t begin = clock();
+	sa.sa_flags = SA_SIGINFO;
 	if (argc != 3)
 		error_handler(INVALID_INPUT);
 	pid = ft_atoi(argv[1]);
@@ -39,12 +40,8 @@ int main(int argc, char **argv)
 		str++;
 	}
 	convert_to_binary_and_send(bin, '\0', pid);
-//	clock_t end = clock();
-//	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//	printf("%f\n", time_spent);
 	sleep(5);
 	error_handler(NO_FEEDBACK);
-//	return (0);
 }
 
 /*
@@ -54,7 +51,7 @@ int main(int argc, char **argv)
 
 void	convert_to_binary_and_send(int *bin, unsigned char letter, int pid)
 {
-	int base_2;
+	int	base_2;
 	int	iter;
 
 	base_2 = 128;
@@ -80,7 +77,7 @@ void	convert_to_binary_and_send(int *bin, unsigned char letter, int pid)
 
 int	send_binary(int *bin, int pid)
 {
-	int ret;
+	int	ret;
 	int	iter;
 
 	ret = 0;
