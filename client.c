@@ -14,15 +14,13 @@ int main(int argc, char **argv)
 		error_handler(INVALID_INPUT);
 	pid = ft_atoi(argv[1]);
 	size = ft_strlen(argv[2]);
-	str = malloc(sizeof(char) * (size + 1)); //this malloc is probably not needed, and the same applies to the free
-	ft_strlcpy(str, argv[2], size + 1);
+	str = argv[2];
 	while (*str)
 	{
 		convert_to_binary_and_send(bin, *str, pid);
 		str++;
 	}
 	convert_to_binary_and_send(bin, '\0', pid);
-	free(str);
 //	clock_t end = clock();
 //	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 //	printf("%f\n", time_spent);
@@ -35,6 +33,8 @@ int main(int argc, char **argv)
 /*
  * for some reason, changing the type of letter from int to unsigned char allows
  * the transfer of unicode chars!!!!
+ * see Endianness
+ * if unicode it sends two sets of 8bits in order to print the char
  */
 
 void	convert_to_binary_and_send(int *bin, unsigned char letter, int pid)

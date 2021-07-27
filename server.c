@@ -11,8 +11,6 @@ int main()
 	sigaddset(&sa.sa_mask, SIGUSR1);
 	sigaddset(&sa.sa_mask, SIGUSR2);
 //	sa.sa_flags = SA_SIGINFO; ////not sure if needed
-//	signal(SIGUSR1, save_to_array);
-//	signal(SIGUSR2, save_to_array);
 	ft_putstr_fd("Server is now running. PID: ", 1);
 	ft_putnbr_fd(getpid(), 1);
 	ft_putchar_fd('\n', 1);
@@ -40,7 +38,7 @@ void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 	if (array.iter == 8)
 	{
 		decimal = decimal_conv(array.bin);
-		write(1, &decimal, 1);
+		write(1, &decimal, 1); //if it prints every 8, how come it prints a unicode thats 16, does it know it will get for another 8?
 		if (decimal == '\0')
 		{
 			write(1, "\n", 1);
