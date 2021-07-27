@@ -11,10 +11,10 @@ int main(int argc, char **argv)
 
 //	clock_t begin = clock();
 	if (argc != 3)
-		return (1);
+		error_handler(INVALID_INPUT);
 	pid = ft_atoi(argv[1]);
 	size = ft_strlen(argv[2]);
-	str = malloc(sizeof(char) * (size + 1));
+	str = malloc(sizeof(char) * (size + 1)); //this malloc is probably not needed, and the same applies to the free
 	ft_strlcpy(str, argv[2], size + 1);
 	while (*str)
 	{
@@ -22,14 +22,12 @@ int main(int argc, char **argv)
 		str++;
 	}
 	convert_to_binary_and_send(bin, '\0', pid);
-	convert_to_binary_and_send(bin, '\n', pid);
+	free(str);
 //	clock_t end = clock();
 //	double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 //	printf("%f\n", time_spent);
 
-	sleep(5);
-
-///wait for feedback
+	sleep(5); ///wait for feedback
 ///error_handler
 //	return (0);
 }
@@ -68,4 +66,12 @@ void	send_binary(int *bin, int pid)
 		usleep(100);
 		iter++;
 	}
+}
+
+
+int	error_handler(int error)
+{
+	if (error == INVALID_INPUT)
+		ft_putstr_fd("Invalid input\n", 1);
+	exit(1);
 }

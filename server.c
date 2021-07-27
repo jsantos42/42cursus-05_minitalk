@@ -41,8 +41,11 @@ void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 	{
 		decimal = decimal_conv(array.bin);
 		write(1, &decimal, 1);
-		if (decimal == '\n')
+		if (decimal == '\0')
+		{
+			write(1, "\n", 1);
 			kill(info->si_pid, SIGUSR1);
+		}
 		array.iter = 0;
 	}
 }
