@@ -82,7 +82,7 @@ int	send_binary(int *bin, int pid)
 
 	ret = 0;
 	iter = 0;
-	while (iter < 8)
+	while (iter < NUMBER_OF_BITS)
 	{
 		if (bin[iter] == 0)
 			ret = kill(pid, SIGUSR1);

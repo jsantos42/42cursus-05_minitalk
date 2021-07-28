@@ -50,12 +50,12 @@ void	save_to_array(int signal, siginfo_t *info, void *ucontext)
 		converted_signal = 0;
 	else if (signal == SIGUSR2)
 		converted_signal = 1;
-	if (array.iter < 8)
+	if (array.iter < NUMBER_OF_BITS)
 	{
 		array.bin[array.iter] = converted_signal;
 		array.iter++;
 	}
-	if (array.iter == 8)
+	if (array.iter == NUMBER_OF_BITS)
 	{
 		decimal = decimal_conv(array.bin);
 		write(1, &decimal, 1);
@@ -77,7 +77,7 @@ int	decimal_conv(int *bin)
 	decimal = 0;
 	base_2 = 128;
 	iter = 0;
-	while (iter < 8)
+	while (iter < NUMBER_OF_BITS)
 	{
 		if (bin[iter] == 1)
 			decimal += base_2;

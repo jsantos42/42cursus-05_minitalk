@@ -7,6 +7,7 @@
 # define INVALID_INPUT -1
 # define TRANSMISSION_ERROR -2
 # define NO_FEEDBACK	-3
+# define NUMBER_OF_BITS 8
 
 typedef struct s_static {
 	int	iter;
